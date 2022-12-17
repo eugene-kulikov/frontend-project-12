@@ -2,7 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import cn from 'classnames';
+import {
+  Card, Form, Button, Container, Row, Col, Image,
+} from 'react-bootstrap';
 import login from '../assets/images/login.jpeg';
 
 function Login() {
@@ -13,87 +15,83 @@ function Login() {
     },
     validationSchema: yup.object({
       username: yup.string()
-        .max(15, 'Must be 15 characters or less')
-        .required('Required'),
+        .max(3, 'От 3 до 20 символов')
+        .max(20, 'От 3 до 20 символов')
+        .required('Обязательное поле'),
       password: yup.string()
-        .max(15, 'Must be 15 characters or less')
-        .required('Required'),
+        .min(6, 'Не менее 6 символов')
+        .required('Обязательное поле'),
     }),
     onSubmit: (values) => {
       console.log(values);
     },
   });
 
-  const hasInputsError = (formik.touched.username && formik.errors.username)
-      || (formik.touched.password && formik.errors.password);
-
-  const inputClass = cn('form-control', {
-    'is-invalid': hasInputsError,
-  });
+  const hasNameError = !!(formik.touched.username && formik.errors.username);
+  const hasPasswordError = !!(formik.touched.password && formik.errors.password);
 
   return (
-        <div className="container-fluid h-100">
-            <div className="row justify-content-center align-content-center h-100">
-                <div className="col-12 col-md-8 col-xxl-6">
-                    <div className="card shadow-sm">
-                        <div className="card-body row p-5">
-                            <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                                <img className="rounded-circle"
-                                     src={login}
-                                     alt="Войти"
-                                />
-                            </div>
+      <Container fluid className="h-100">
+          <Row className="justify-content-center align-content-center h-100">
+              <Col xs={12} md={8} xxl={6}>
+                  <Card className="shadow-sm">
+                      <Card.Body as={Row} className="p-5">
+                          <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
+                              <Image roundedCircle={true} src={login}alt="Войти"/>
+                          </Col>
 
-                                <form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                                    <h1 className="text-center mb-4">Войти</h1>
-                                    <div className="form-floating mb-3">
-                                        <input className={inputClass}
-                                            id="username"
-                                            name="username"
-                                            autoComplete="username"
-                                            required=""
-                                            placeholder="Ваш ник"
-                                            type="text"
-                                            value={formik.values.username}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                        />
-                                        <label htmlFor="username">Ваш ник</label>
-                                    </div>
-                                    <div className="form-floating mb-4">
-                                        <input className={inputClass}
-                                               id="password"
-                                               name="password"
-                                               autoComplete="current-password"
-                                               required=""
-                                               placeholder="Пароль"
-                                               type="password"
-                                               value={formik.values.password}
-                                               onChange={formik.handleChange}
-                                               onBlur={formik.handleBlur}
-                                        />
-                                        <label className="form-label" htmlFor="password">Пароль</label>
-                                        {
-                                            hasInputsError && (
-                                                <div className="invalid-tooltip">Неверные имя пользователя или пароль</div>
-                                            )
-                                        }
-                                    </div>
-                                    <button className="w-100 mb-3 btn btn-outline-primary"
-                                            type="submit"
-                                    >Войти</button>
-                                </form>
+                          <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
+                              <h1 className="text-center mb-4">Войти</h1>
+                              <Form.Group className="mb-3 form-floating">
+                                  <Form.Control
+                                      id="username"
+                                      name="username"
+                                      autoComplete="username"
+                                      required
+                                      placeholder="Ваш ник"
+                                      type="text"
+                                      value={formik.values.username}
+                                      onChange={formik.handleChange}
+                                      onBlur={formik.handleBlur}
+                                      isInvalid={hasNameError}
+                                  />
+                                  <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                                  <Form.Control.Feedback type="invalid" tooltip>
+                                      {formik.errors.username}
+                                  </Form.Control.Feedback>
+                              </Form.Group>
+                              <Form.Group className="mb-4 form-floating">
+                                  <Form.Control
+                                      id="password"
+                                      name="password"
+                                      autoComplete="current-password"
+                                      required
+                                      placeholder="Пароль"
+                                      type="password"
+                                      value={formik.values.password}
+                                      onChange={formik.handleChange}
+                                      onBlur={formik.handleBlur}
+                                      isInvalid={hasPasswordError}
+                                  />
+                                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                                  <Form.Control.Feedback type="invalid" tooltip>
+                                      {formik.errors.password}
+                                  </Form.Control.Feedback>
+                              </Form.Group>
+                              <Button className="w-100 mb-3" type="submit" variant="outline-primary">
+                                  Войти
+                              </Button>
+                          </Form>
 
-                        </div>
-                        <div className="card-footer p-4">
-                            <div className="text-center"><span>Нет аккаунта?&ensp;</span>
-                                <Link to="/signup">Регистрация</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                      </Card.Body>
+                      <Card.Footer className="p-4 text-center">
+                          <span>Нет аккаунта?&ensp;</span>
+                          <Link to="/signup">Регистрация</Link>
+                      </Card.Footer>
+                  </Card>
+              </Col>
+          </Row>
+      </Container>
   );
 }
 
