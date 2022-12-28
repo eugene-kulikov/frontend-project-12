@@ -1,13 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Card, Form, Button, Container, Row, Col, Image,
 } from 'react-bootstrap';
+import axios from 'axios';
 import login from '../assets/images/login.jpeg';
+import useAuth from '../hook/useAuth.js';
 
 function Login() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { signin } = useAuth();
+
+  const fromPage = location.state?.from?.pathname || '/';
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -22,13 +30,24 @@ function Login() {
         .min(6, 'Не менее 6 символов')
         .required('Обязательное поле'),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values, { setErrors }) => {
+      console.log('login form', values);
+      try {
+        const { data: { token } } = await axios.post('/api/v1/login', {
+          username: values.username,
+          password: values.password,
+        });
+        localStorage.setItem('token', token);
+        signin(values, () => navigate(fromPage, { replace: true }));
+      } catch (e) {
+        setErrors({ auth: e.response?.data?.message });
+      }
     },
   });
 
   const hasNameError = !!(formik.touched.username && formik.errors.username);
   const hasPasswordError = !!(formik.touched.password && formik.errors.password);
+  const hasAuthError = !!formik.errors.auth;
 
   return (
       <Container fluid className="h-100">
@@ -71,11 +90,11 @@ function Login() {
                                       value={formik.values.password}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
-                                      isInvalid={hasPasswordError}
+                                      isInvalid={hasPasswordError || hasAuthError}
                                   />
                                   <Form.Label htmlFor="password">Пароль</Form.Label>
                                   <Form.Control.Feedback type="invalid" tooltip>
-                                      {formik.errors.password}
+                                      {formik.errors.password || formik.errors.auth}
                                   </Form.Control.Feedback>
                               </Form.Group>
                               <Button className="w-100 mb-3" type="submit" variant="outline-primary">

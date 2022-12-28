@@ -13,6 +13,7 @@ settings:
 rules:
   no-console: 0
   react/react-in-jsx-scope: "off"
+  react/prop-types: "off"
   import/extensions:
     - error
     - ignorePackages
