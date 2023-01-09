@@ -23,11 +23,8 @@ function Login() {
     },
     validationSchema: yup.object({
       username: yup.string()
-        .max(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
         .required('Обязательное поле'),
       password: yup.string()
-        .min(6, 'Не менее 6 символов')
         .required('Обязательное поле'),
     }),
     onSubmit: async (values, { setErrors }) => {
@@ -40,7 +37,9 @@ function Login() {
         localStorage.setItem('token', token);
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
-        setErrors({ auth: e.response?.data?.message });
+        console.log(e);
+        const message = e.code === 'ERR_BAD_REQUEST' ? 'Неверные имя пользователя или пароль' : e.response?.data?.message;
+        setErrors({ auth: message });
       }
     },
   });
@@ -72,12 +71,12 @@ function Login() {
                                       value={formik.values.username}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
-                                      isInvalid={hasNameError}
+                                      isInvalid={hasNameError || hasAuthError}
                                   />
                                   <Form.Label htmlFor="username">Ваш ник</Form.Label>
-                                  <Form.Control.Feedback type="invalid" tooltip>
+                                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
                                       {formik.errors.username}
-                                  </Form.Control.Feedback>
+                                  </Form.Control.Feedback>}
                               </Form.Group>
                               <Form.Group className="mb-4 form-floating">
                                   <Form.Control

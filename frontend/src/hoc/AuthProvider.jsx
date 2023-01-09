@@ -10,9 +10,9 @@ export const AuthProvider = ({ children }) => {
     cb();
   };
 
-  const signout = (cb) => {
+  const signout = () => {
     setUser(null);
-    cb();
+    localStorage.removeItem('token');
   };
 
   const value = { user, signin, signout };
