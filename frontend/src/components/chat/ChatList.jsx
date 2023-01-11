@@ -1,7 +1,12 @@
 import React from 'react';
 import { Button, Col, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { selectorChannels } from '../../slices/channelsSlice.js';
 
 function ChatList() {
+  const channels = useSelector(selectorChannels.selectAll);
+  const currentChannelId = useSelector((store) => store.channels.currentChannelId);
+
   return (
       <Col md={2} className="col-4 border-end pt-5 px-0 bg-light">
         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -16,16 +21,14 @@ function ChatList() {
         </div>
 
         <Nav as="ul" className="flex-column px-2" variant="pills" fill>
-          <Nav.Item as="li" className="w-100">
-            <Button type="button" variant="secondary" className="w-100 rounded-0 text-start">
-              <span className="me-1">#</span>general
-            </Button>
-          </Nav.Item>
-          <Nav.Item as="li" className="w-100">
-            <Button type="button" variant="" className="w-100 rounded-0 text-start">
-              <span className="me-1">#</span>random
-            </Button>
-          </Nav.Item>
+          {channels.map((channel) => (
+              <Nav.Item key={channel.id} as="li" className="w-100">
+                <Button type="button" className="w-100 rounded-0 text-start"
+                        variant={currentChannelId === channel.id ? 'secondary' : ''}>
+                  <span className="me-1">#</span>{channel.name}
+                </Button>
+              </Nav.Item>
+          ))}
         </Nav>
       </Col>
   );
