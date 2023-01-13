@@ -5,14 +5,13 @@ import * as yup from 'yup';
 import {
   Card, Form, Button, Container, Row, Col, Image,
 } from 'react-bootstrap';
-import axios from 'axios';
-import login from '../assets/images/login.jpeg';
+import loginImage from '../assets/images/login.jpeg';
 import useAuth from '../hook/useAuth.js';
 
 function Login() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { signin } = useAuth();
+  const { signin, login } = useAuth();
 
   const fromPage = location.state?.from?.pathname || '/';
 
@@ -30,11 +29,10 @@ function Login() {
     onSubmit: async (values, { setErrors }) => {
       console.log('login form', values);
       try {
-        const { data: { token } } = await axios.post('/api/v1/login', {
+        await login({
           username: values.username,
           password: values.password,
         });
-        localStorage.setItem('token', token);
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
         console.log(e);
@@ -55,7 +53,7 @@ function Login() {
                   <Card className="shadow-sm">
                       <Card.Body as={Row} className="p-5">
                           <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                              <Image roundedCircle={true} src={login}alt="Войти"/>
+                              <Image roundedCircle={true} src={loginImage} alt="Войти"/>
                           </Col>
 
                           <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>

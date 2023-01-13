@@ -4,11 +4,11 @@ import { fetchDataChat } from './channelsSlice.js';
 const messagesAdapter = createEntityAdapter();
 const initialState = messagesAdapter.getInitialState();
 
-const channelsSlice = createSlice({
+const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-
+    addMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
     builder
@@ -18,6 +18,8 @@ const channelsSlice = createSlice({
   },
 });
 
+export const { actions } = messagesSlice;
+
 export const selectorMessages = messagesAdapter.getSelectors((state) => state.messages);
 
-export default channelsSlice.reducer;
+export default messagesSlice.reducer;

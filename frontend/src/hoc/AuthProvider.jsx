@@ -1,9 +1,19 @@
 import { createContext, useState } from 'react';
+import axios from 'axios';
+import routes from '../routes.js';
+import getUserInfo from '../utils/common.js';
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(localStorage.getItem('token'));
+  const initialUser = getUserInfo();
+  const [user, setUser] = useState(initialUser);
+
+  const login = (body) => axios.post(routes.loginPath(), body)
+    .then(({ data }) => {
+      localStorage.setItem('user', JSON.stringify(data));
+      return data;
+    });
 
   const signin = (newUser, cb) => {
     setUser(newUser);
@@ -12,10 +22,14 @@ export const AuthProvider = ({ children }) => {
 
   const signout = () => {
     setUser(null);
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
-  const value = { user, signin, signout };
+  const username = user ? getUserInfo().username : null;
+
+  const value = {
+    user, username, signin, signout, login,
+  };
 
   return <AuthContext.Provider value={value}>
         {children}
