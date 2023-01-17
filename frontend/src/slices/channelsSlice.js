@@ -12,13 +12,18 @@ export const fetchDataChat = createAsyncThunk(
 );
 
 const channelsAdapter = createEntityAdapter();
-const initialState = channelsAdapter.getInitialState({ loading: 'idle', error: null, currentChannelId: 1 });
+const initialState = channelsAdapter.getInitialState({ currentChannelId: 1 });
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-
+    addChannel: channelsAdapter.addOne,
+    removeChannel: channelsAdapter.removeOne,
+    updateChannel: channelsAdapter.updateOne,
+    setCurrentChannelId: (state, { payload }) => {
+      state.currentChannelId = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -29,5 +34,5 @@ const channelsSlice = createSlice({
 });
 
 export const selectorChannels = channelsAdapter.getSelectors((state) => state.channels);
-
+export const { actions } = channelsSlice;
 export default channelsSlice.reducer;

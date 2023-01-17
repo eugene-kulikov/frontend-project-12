@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getUserInfo from './common.js';
+import { getUserInfo } from './common.js';
 
 export default {
   get(url, params) {

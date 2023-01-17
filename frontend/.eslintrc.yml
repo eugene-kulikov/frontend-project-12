@@ -19,3 +19,4 @@ rules:
     - ignorePackages
     - js: always
   no-plusplus: ["error", { "allowForLoopAfterthoughts": true }]
+  no-param-reassign: [2, { "props": false }]

@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
 import routes from '../routes.js';
-import getUserInfo from '../utils/common.js';
+import { getUserInfo } from '../utils/common.js';
 
 export const AuthContext = createContext(null);
 

@@ -8,12 +8,15 @@ import ChatContent from './ChatContent.jsx';
 import socket from '../../utils/socket.js';
 import useAuth from '../../hook/useAuth.js';
 import { selectorMessages } from '../../slices/messagesSlice.js';
+import { selectorChannels } from '../../slices/channelsSlice.js';
 
 function Chat() {
   const messageRef = useRef();
   const { username } = useAuth();
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
-  const messages = useSelector(selectorMessages.selectAll);
+  const channel = useSelector((store) => selectorChannels.selectById(store, currentChannelId));
+  const allMessages = useSelector(selectorMessages.selectAll);
+  const messages = allMessages.filter(({ channelId }) => channelId === currentChannelId);
   const messagesCount = messages.length;
 
   useEffect(() => {
@@ -42,10 +45,10 @@ function Chat() {
       <Col className="p-0 h-100">
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
-            <p className="m-0"><b># general</b></p>
+            <p className="m-0"><b># {channel?.name}</b></p>
             <span className="text-muted">{messagesCount} сообщений</span>
           </div>
-          <ChatContent />
+          <ChatContent messages={messages} />
           <div className="mt-auto px-5 py-3">
             <Form className="py-1 border rounded-2" onSubmit={formik.handleSubmit}>
               <InputGroup className="has-validation">

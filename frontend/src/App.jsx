@@ -10,12 +10,23 @@ import RequireAuth from './hoc/RequireAuth.jsx';
 import { AuthProvider } from './hoc/AuthProvider.jsx';
 import socket from './utils/socket.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
+import { actions as channelsActions } from './slices/channelsSlice.js';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     socket.on('newMessage', (response) => {
       dispatch(messagesActions.addMessage(response));
+    });
+    socket.on('newChannel', (response) => {
+      dispatch(channelsActions.addChannel(response));
+      dispatch(channelsActions.setCurrentChannelId(response.id));
+    });
+    socket.on('removeChannel', (response) => {
+      dispatch(channelsActions.removeChannel(response.id));
+    });
+    socket.on('renameChannel', (response) => {
+      dispatch(channelsActions.updateChannel({ id: response.id, changes: response }));
     });
   }, [dispatch]);
 

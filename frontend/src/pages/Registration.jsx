@@ -15,7 +15,7 @@ function Registration() {
     },
     validationSchema: yup.object({
       username: yup.string()
-        .max(3, 'От 3 до 20 символов')
+        .min(3, 'От 3 до 20 символов')
         .max(20, 'От 3 до 20 символов')
         .required('Обязательное поле'),
       password: yup.string()
