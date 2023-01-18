@@ -15,6 +15,12 @@ export const AuthProvider = ({ children }) => {
       return data;
     });
 
+  const signup = (body) => axios.post(routes.registerPath(), body)
+    .then(({ data }) => {
+      localStorage.setItem('user', JSON.stringify(data));
+      return data;
+    });
+
   const signin = (newUser, cb) => {
     setUser(newUser);
     cb();
@@ -28,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   const username = user ? getUserInfo().username : null;
 
   const value = {
-    user, username, signin, signout, login,
+    user, username, signin, signout, login, signup,
   };
 
   return <AuthContext.Provider value={value}>

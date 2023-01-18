@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Card, Form, Button, Container, Row, Col, Image,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useLocation, useNavigate } from 'react-router-dom';
 import registration from '../assets/images/registration.jpeg';
+import useAuth from '../hook/useAuth.js';
 
 function Registration() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { signin, signup } = useAuth();
+  const usernameRef = useRef();
+
+  const fromPage = location.state?.from?.pathname || '/';
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -25,8 +38,19 @@ function Registration() {
         .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
         .required('Обязательное поле'),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values, { setErrors }) => {
+      try {
+        console.log('registratuin form', values);
+        await signup({
+          username: values.username,
+          password: values.password,
+        });
+        signin(values, () => navigate(fromPage, { replace: true }));
+      } catch (e) {
+        console.log(e);
+        const message = e.response.status === 409 ? 'Такой пользователь уже существует' : e.response?.data?.message;
+        setErrors({ auth: message });
+      }
     },
   });
 
@@ -34,6 +58,7 @@ function Registration() {
   const hasPasswordError = !!(formik.touched.password && formik.errors.password);
   const hasConfirmPasswordError = !!(formik.touched.confirmPassword
       && formik.errors.confirmPassword);
+  const hasAuthError = !!formik.errors.auth;
 
   return (
         <Container fluid className="h-100">
@@ -58,12 +83,13 @@ function Registration() {
                                         value={formik.values.username}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        isInvalid={hasNameError}
+                                        isInvalid={hasNameError || hasAuthError}
+                                        ref={usernameRef}
                                     />
                                     <Form.Label htmlFor="username">Имя пользователя</Form.Label>
-                                    <Form.Control.Feedback type="invalid" tooltip>
+                                    {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
                                         {formik.errors.username}
-                                    </Form.Control.Feedback>
+                                    </Form.Control.Feedback>}
                                 </Form.Group>
                                 <Form.Group className="mb-3 form-floating">
                                     <Form.Control
@@ -76,12 +102,12 @@ function Registration() {
                                         value={formik.values.password}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        isInvalid={hasPasswordError}
+                                        isInvalid={hasPasswordError || hasAuthError}
                                     />
                                     <Form.Label htmlFor="password">Пароль</Form.Label>
-                                    <Form.Control.Feedback type="invalid" tooltip>
+                                    {hasPasswordError && <Form.Control.Feedback type="invalid" tooltip>
                                         {formik.errors.password}
-                                    </Form.Control.Feedback>
+                                    </Form.Control.Feedback>}
                                 </Form.Group>
                                 <Form.Group className="mb-4 form-floating">
                                     <Form.Control
@@ -94,11 +120,11 @@ function Registration() {
                                         value={formik.values.confirmPassword}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        isInvalid={hasConfirmPasswordError}
+                                        isInvalid={hasConfirmPasswordError || hasAuthError}
                                     />
                                     <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
                                     <Form.Control.Feedback type="invalid" tooltip>
-                                        {formik.errors.confirmPassword}
+                                        {formik.errors.confirmPassword || formik.errors.auth}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Button className="w-100" type="submit" variant="outline-primary">

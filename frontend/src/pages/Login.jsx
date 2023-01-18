@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -12,6 +12,11 @@ function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   const { signin, login } = useAuth();
+  const usernameRef = useRef();
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
 
   const fromPage = location.state?.from?.pathname || '/';
 
@@ -70,6 +75,7 @@ function Login() {
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
                                       isInvalid={hasNameError || hasAuthError}
+                                      ref={usernameRef}
                                   />
                                   <Form.Label htmlFor="username">Ваш ник</Form.Label>
                                   {hasNameError && <Form.Control.Feedback type="invalid" tooltip>

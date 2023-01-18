@@ -3,6 +3,7 @@ const composePath = (paths) => prefix + paths.join('/');
 
 const routes = {
   loginPath: () => composePath(['login']),
+  registerPath: () => composePath(['signup']),
   chatPath: () => composePath(['data']),
 };
 

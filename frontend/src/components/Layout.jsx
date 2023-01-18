@@ -2,10 +2,19 @@ import { Outlet, Link } from 'react-router-dom';
 import {
   Button, Container, Nav, Navbar,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import useAuth from '../hook/useAuth.js';
+import { isEmptyObject } from '../utils/common.js';
+import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const Layout = () => {
+  const dispatch = useDispatch();
   const { user, signout } = useAuth();
+  const showSignOut = !isEmptyObject(user);
+  const logout = () => {
+    dispatch(channelsActions.setCurrentChannelId(1));
+    signout();
+  };
 
   return (
         <div className="h-100">
@@ -14,9 +23,9 @@ const Layout = () => {
                     <Navbar bg="white" expand="lg" variant="light" className="shadow-sm">
                         <Container>
                             <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-                            {user && <Nav>
+                            {showSignOut && <Nav>
                                 <Nav.Item className='ms-4'>
-                                    <Button variant="primary" onClick={signout}>Выйти</Button>
+                                    <Button variant="primary" onClick={logout}>Выйти</Button>
                                 </Nav.Item>
                             </Nav>}
                         </Container>
