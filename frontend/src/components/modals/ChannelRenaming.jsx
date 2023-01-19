@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import socket from '../../utils/socket.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 
 function ChannelRenaming() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const channels = useSelector(selectorChannels.selectAll);
   const channelId = useSelector((store) => store.modals.channelId);
   const selectedChannel = useSelector((store) => selectorChannels.selectById(store, channelId));
@@ -27,10 +29,10 @@ function ChannelRenaming() {
     },
     validationSchema: yup.object({
       name: yup.string()
-        .required('Обязательное поле')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+        .required(t('validation.required'))
+        .min(3, t('validation.intervalLength'))
+        .max(20, t('validation.intervalLength'))
+        .notOneOf(channelsNames, t('validation.unique')),
     }),
     onSubmit: ({ name }) => {
       socket.emit('renameChannel', { name, id: channelId });
@@ -43,7 +45,7 @@ function ChannelRenaming() {
   return (
       <Modal show onHide={close}>
         <Modal.Header closeButton>
-          <Modal.Title>Переименовать канал</Modal.Title>
+          <Modal.Title>{t('component.modal.rename.title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
@@ -57,15 +59,15 @@ function ChannelRenaming() {
                   name="name"
                   ref={inputRef}
               />
-              <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
+              <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.rename.label')}</Form.Label>
               {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
 
               <div className="d-flex justify-content-end">
                 <Button onClick={close} className="me-2" variant="secondary">
-                  Отменить
+                  {t('component.modal.rename.cancel')}
                 </Button>
                 <Button type="submit">
-                  Отправить
+                  {t('component.modal.rename.confirm')}
                 </Button>
               </div>
             </Form.Group>

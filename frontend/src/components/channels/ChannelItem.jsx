@@ -4,11 +4,13 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { actions as channelsActions } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
 function ChannelItem({ channel }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
   const variant = currentChannelId === channel.id ? 'secondary' : '';
   const buttonClasses = ['w-100', 'rounded-0', 'text-start', {
@@ -35,16 +37,16 @@ function ChannelItem({ channel }) {
               split
           >
               <span className="visually-hidden">
-                Управление каналом
+                {t('page.home.channels.dropdown.management')}
               </span>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
               <Dropdown.Item onClick={() => dispatch(modalsActions.showModal({ type: 'removeChannel', channelId: channel.id }))}>
-                  Удалить
+                  {t('page.home.channels.dropdown.remove')}
               </Dropdown.Item>
               <Dropdown.Item onClick={() => dispatch(modalsActions.showModal({ type: 'renameChannel', channelId: channel.id }))}>
-                  Переименовать
+                  {t('page.home.channels.dropdown.rename')}
               </Dropdown.Item>
           </Dropdown.Menu>
       </Dropdown>

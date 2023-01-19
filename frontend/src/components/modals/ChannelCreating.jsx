@@ -3,6 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import socket from '../../utils/socket.js';
@@ -13,6 +14,7 @@ function ChannelCreating() {
   const channelsNames = channels.map((channel) => channel.name);
   const close = () => dispatch(modalsActions.closeModal());
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -24,10 +26,10 @@ function ChannelCreating() {
     },
     validationSchema: yup.object({
       name: yup.string()
-        .required('Обязательное поле')
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
-        .notOneOf(channelsNames, 'Должно быть уникальным'),
+        .required(t('validation.required'))
+        .min(3, t('validation.intervalLength'))
+        .max(20, t('validation.intervalLength'))
+        .notOneOf(channelsNames, t('validation.unique')),
     }),
     onSubmit: ({ name }) => {
       console.log('adding channel form', name);
@@ -41,7 +43,7 @@ function ChannelCreating() {
   return (
         <Modal show onHide={close}>
             <Modal.Header closeButton>
-                <Modal.Title>Добавить канал</Modal.Title>
+                <Modal.Title>{t('component.modal.add.title')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
@@ -55,15 +57,15 @@ function ChannelCreating() {
                             name="name"
                             ref={inputRef}
                         />
-                        <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
+                        <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.add.label')}</Form.Label>
                         {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
 
                         <div className="d-flex justify-content-end">
                             <Button onClick={close} className="me-2" variant="secondary">
-                                Отменить
+                                {t('component.modal.add.cancel')}
                             </Button>
                             <Button type="submit">
-                                Отправить
+                                {t('component.modal.add.confirm')}
                             </Button>
                         </div>
                     </Form.Group>
