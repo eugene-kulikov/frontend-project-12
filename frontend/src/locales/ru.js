@@ -83,5 +83,15 @@ export default {
       userExist: 'Такой пользователь уже существует',
       unique: 'Должно быть уникальным',
     },
+    toast: {
+      success: {
+        addChannel: 'Канал создан',
+        removeChannel: 'Канал удалён',
+        renameChannel: 'Канал переименован',
+      },
+      error: {
+        network: 'Проблемы с подключением к сети',
+      },
+    },
   },
 };

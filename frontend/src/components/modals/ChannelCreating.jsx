@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import socket from '../../utils/socket.js';
@@ -15,6 +16,7 @@ function ChannelCreating() {
   const close = () => dispatch(modalsActions.closeModal());
   const inputRef = useRef();
   const { t } = useTranslation();
+  const [stateSubmit, changeStateSubmit] = useState(false);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -33,8 +35,15 @@ function ChannelCreating() {
     }),
     onSubmit: ({ name }) => {
       console.log('adding channel form', name);
-      socket.emit('newChannel', { name });
-      close();
+      changeStateSubmit(true);
+      socket.timeout(5000).emit('newChannel', { name }, (err) => {
+        if (err) {
+          toast.error(t('toast.error.network'));
+        } else {
+          close();
+        }
+        changeStateSubmit(false);
+      });
     },
   });
 
@@ -64,7 +73,7 @@ function ChannelCreating() {
                             <Button onClick={close} className="me-2" variant="secondary">
                                 {t('component.modal.add.cancel')}
                             </Button>
-                            <Button type="submit">
+                            <Button type="submit" disabled={stateSubmit}>
                                 {t('component.modal.add.confirm')}
                             </Button>
                         </div>

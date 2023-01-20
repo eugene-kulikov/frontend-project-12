@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import socket from '../../utils/socket.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
@@ -17,6 +18,7 @@ function ChannelRenaming() {
   const channelsNames = channels.map((channel) => channel.name);
   const close = () => dispatch(modalsActions.closeModal());
   const inputRef = useRef();
+  const [stateSubmit, changeStateSubmit] = useState(false);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -35,8 +37,17 @@ function ChannelRenaming() {
         .notOneOf(channelsNames, t('validation.unique')),
     }),
     onSubmit: ({ name }) => {
-      socket.emit('renameChannel', { name, id: channelId });
-      close();
+      inputRef.current.disabled = true;
+      changeStateSubmit(true);
+      socket.timeout(5000).emit('renameChannel', { name, id: channelId }, (err) => {
+        if (err) {
+          toast.error(t('toast.error.network'));
+        } else {
+          close();
+        }
+        inputRef.current.disabled = false;
+        changeStateSubmit(false);
+      });
     },
   });
 
@@ -66,7 +77,7 @@ function ChannelRenaming() {
                 <Button onClick={close} className="me-2" variant="secondary">
                   {t('component.modal.rename.cancel')}
                 </Button>
-                <Button type="submit">
+                <Button type="submit" disabled={stateSubmit}>
                   {t('component.modal.rename.confirm')}
                 </Button>
               </div>

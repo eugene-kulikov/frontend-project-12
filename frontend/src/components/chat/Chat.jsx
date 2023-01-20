@@ -5,6 +5,7 @@ import {
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import ChatContent from './ChatContent.jsx';
 import socket from '../../utils/socket.js';
 import useAuth from '../../hook/useAuth.js';
@@ -35,11 +36,16 @@ function Chat() {
         message: message.body,
         channelId: currentChannelId,
       };
-      socket.emit('newMessage', newMessageData, (response) => {
-        console.log('status response socket', response.status);
+      messageRef.current.disabled = true;
+      socket.timeout(5000).emit('newMessage', newMessageData, (err) => {
+        if (err) {
+          toast.error(t('toast.error.network'));
+        } else {
+          resetForm();
+          messageRef.current.blur();
+        }
+        messageRef.current.disabled = false;
       });
-      resetForm();
-      messageRef.current.blur();
     },
   });
 
