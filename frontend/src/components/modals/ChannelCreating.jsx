@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import socket from '../../utils/socket.js';
@@ -33,7 +34,8 @@ function ChannelCreating() {
         .max(20, t('validation.intervalLength'))
         .notOneOf(channelsNames, t('validation.unique')),
     }),
-    onSubmit: ({ name }) => {
+    onSubmit: (form) => {
+      const name = leoProfanity.clean(form.name);
       console.log('adding channel form', name);
       changeStateSubmit(true);
       socket.timeout(5000).emit('newChannel', { name }, (err) => {

@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import ChatContent from './ChatContent.jsx';
 import socket from '../../utils/socket.js';
 import useAuth from '../../hook/useAuth.js';
@@ -30,10 +31,11 @@ function Chat() {
     initialValues: {
       body: '',
     },
-    onSubmit: (message, { resetForm }) => {
+    onSubmit: ({ body }, { resetForm }) => {
+      const message = leoProfanity.clean(body);
       const newMessageData = {
         username,
-        message: message.body,
+        message,
         channelId: currentChannelId,
       };
       messageRef.current.disabled = true;

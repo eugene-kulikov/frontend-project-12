@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import socket from '../../utils/socket.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
@@ -36,7 +37,8 @@ function ChannelRenaming() {
         .max(20, t('validation.intervalLength'))
         .notOneOf(channelsNames, t('validation.unique')),
     }),
-    onSubmit: ({ name }) => {
+    onSubmit: (form) => {
+      const name = leoProfanity.clean(form.name);
       inputRef.current.disabled = true;
       changeStateSubmit(true);
       socket.timeout(5000).emit('renameChannel', { name, id: channelId }, (err) => {

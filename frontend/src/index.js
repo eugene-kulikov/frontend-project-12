@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import App from './App.jsx';
 import store from './slices/index.js';
 import resources from './locales/index.js';
@@ -17,6 +18,8 @@ i18n
     debug: false,
     resources,
   });
+
+leoProfanity.add(leoProfanity.getDictionary('ru'));
 
 ReactDOM.createRoot(document.body).render(
     <React.StrictMode>
