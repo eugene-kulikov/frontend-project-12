@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Provider, ErrorBoundary } from '@rollbar/react';
 import Layout from './components/Layout.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
@@ -13,6 +14,7 @@ import { AuthProvider } from './hoc/AuthProvider.jsx';
 import socket from './utils/socket.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import { actions as channelsActions } from './slices/channelsSlice.js';
+import rollbarConfig from './rollbarConfig.js';
 
 function App() {
   const dispatch = useDispatch();
@@ -38,21 +40,25 @@ function App() {
   }, [dispatch]);
 
   return (
-      <AuthProvider>
-          <ToastContainer />
-          <Routes>
-              <Route path="/" element={<Layout />}>
-                  <Route index element={
-                      <RequireAuth>
-                          <Home />
-                      </RequireAuth>
-                  } />
-                  <Route path="login" element={<Login />} />
-                  <Route path="signup" element={<Registration />} />
-                  <Route path="*" element={<NotFound />} />
-              </Route>
-          </Routes>
-      </AuthProvider>
+      <Provider config={rollbarConfig}>
+         <ErrorBoundary>
+            <AuthProvider>
+                <ToastContainer />
+                <Routes>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={
+                            <RequireAuth>
+                                <Home />
+                            </RequireAuth>
+                        } />
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Registration />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+                </Routes>
+            </AuthProvider>
+         </ErrorBoundary>
+      </Provider>
   );
 }
 
