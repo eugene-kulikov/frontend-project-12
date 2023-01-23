@@ -8,7 +8,6 @@ export default {
           password: 'Пароль',
         },
         submit: 'Войти',
-        altImage: 'Войти',
         footer: {
           text: 'Нет аккаунта?',
           link: 'Регистрация',
@@ -23,7 +22,6 @@ export default {
           placeholderConfirm: 'Пароли должны совпадать',
         },
         submit: 'Зарегистрироваться',
-        altImage: 'Регистрация',
       },
       home: {
         channels: {
@@ -43,7 +41,6 @@ export default {
       },
       notFound: {
         title: 'Страница не найдена',
-        altImage: 'Страница не найдена',
         text: 'Но вы можете перейти',
         link: 'на главную страницу',
       },
@@ -90,7 +87,7 @@ export default {
         renameChannel: 'Канал переименован',
       },
       error: {
-        network: 'Проблемы с подключением к сети',
+        network: 'Ошибка соединения',
       },
     },
   },

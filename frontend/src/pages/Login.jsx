@@ -42,7 +42,7 @@ function Login() {
         });
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
-        console.log(e);
+        console.log('onSubmit login form', e);
         const message = e.code === 'ERR_BAD_REQUEST' ? t('validation.invalidData') : e.response?.data?.message;
         setErrors({ auth: message });
       }
@@ -60,7 +60,7 @@ function Login() {
                   <Card className="shadow-sm">
                       <Card.Body as={Row} className="p-5">
                           <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                              <Image roundedCircle={true} src={loginImage} alt={t('page.login.altImage')}/>
+                              <Image roundedCircle={true} src={loginImage} alt={t('page.login.title')}/>
                           </Col>
 
                           <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>

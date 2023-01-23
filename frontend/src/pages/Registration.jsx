@@ -42,14 +42,14 @@ function Registration() {
     }),
     onSubmit: async (values, { setErrors }) => {
       try {
-        console.log('registratuin form', values);
+        console.log('registration form', values);
         await signup({
           username: values.username,
           password: values.password,
         });
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
-        console.log(e);
+        console.log('onSubmit registration form', e);
         const message = e.response.status === 409 ? t('validation.userExist') : e.response?.data?.message;
         setErrors({ auth: message });
       }
@@ -69,7 +69,7 @@ function Registration() {
                     <Card className="shadow-sm">
                         <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
                             <div>
-                                <Image roundedCircle={true} src={registration} alt={t('page.registration.altImage')}/>
+                                <Image roundedCircle={true} src={registration} alt={t('page.registration.title')}/>
                             </div>
 
                             <Form className="w-50" onSubmit={formik.handleSubmit}>

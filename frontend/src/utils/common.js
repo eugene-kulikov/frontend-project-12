@@ -2,6 +2,7 @@ export function getUserInfo() {
   try {
     return JSON.parse(localStorage.getItem('user')) ?? {};
   } catch (e) {
+    console.log('getUserInfo', e);
     return {};
   }
 }
