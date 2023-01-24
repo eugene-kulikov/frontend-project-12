@@ -40,25 +40,26 @@ function App() {
   }, [dispatch]);
 
   return (
-      <Provider config={rollbarConfig}>
-         <ErrorBoundary>
-            <AuthProvider>
-                <ToastContainer />
-                <Routes>
-                    <Route path="/" element={<Layout />}>
-                        <Route index element={
-                            <RequireAuth>
-                                <Home />
-                            </RequireAuth>
-                        } />
-                        <Route path="login" element={<Login />} />
-                        <Route path="signup" element={<Registration />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Route>
-                </Routes>
-            </AuthProvider>
-         </ErrorBoundary>
-      </Provider>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <AuthProvider>
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+                }
+              />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Registration />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </ErrorBoundary>
+    </Provider>
   );
 }
 

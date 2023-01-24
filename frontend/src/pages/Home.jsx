@@ -15,13 +15,13 @@ function Home() {
   }, []);
 
   return (
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-          <Row className="h-100 bg-white flex-md-row">
-              <Modal/>
-              <ChannelList/>
-              <Chat/>
-          </Row>
-      </Container>
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
+      <Row className="h-100 bg-white flex-md-row">
+        <Modal/>
+        <ChannelList/>
+        <Chat/>
+      </Row>
+    </Container>
   );
 }
 

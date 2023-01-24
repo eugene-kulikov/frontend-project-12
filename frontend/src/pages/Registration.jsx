@@ -63,82 +63,82 @@ function Registration() {
   const hasAuthError = !!formik.errors.auth;
 
   return (
-        <Container fluid className="h-100">
-            <Row className="justify-content-center align-content-center h-100">
-                <Col xs={12} md={8} xxl={6}>
-                    <Card className="shadow-sm">
-                        <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-                            <div>
-                                <Image roundedCircle={true} src={registration} alt={t('page.registration.title')}/>
-                            </div>
+    <Container fluid className="h-100">
+      <Row className="justify-content-center align-content-center h-100">
+        <Col xs={12} md={8} xxl={6}>
+          <Card className="shadow-sm">
+            <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
+              <div>
+                <Image roundedCircle={true} src={registration} alt={t('page.registration.title')}/>
+              </div>
 
-                            <Form className="w-50" onSubmit={formik.handleSubmit}>
-                                <h1 className="text-center mb-4">{t('page.registration.title')}</h1>
-                                <Form.Group className="mb-3 form-floating">
-                                    <Form.Control
-                                        id="username"
-                                        name="username"
-                                        autoComplete="username"
-                                        required
-                                        placeholder={t('page.registration.fields.name')}
-                                        type="text"
-                                        value={formik.values.username}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        isInvalid={hasNameError || hasAuthError}
-                                        ref={usernameRef}
-                                    />
-                                    <Form.Label htmlFor="username">{t('page.registration.fields.name')}</Form.Label>
-                                    {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
-                                        {formik.errors.username}
-                                    </Form.Control.Feedback>}
-                                </Form.Group>
-                                <Form.Group className="mb-3 form-floating">
-                                    <Form.Control
-                                        id="password"
-                                        name="password"
-                                        autoComplete="new-password"
-                                        required
-                                        placeholder={t('page.registration.fields.password')}
-                                        type="password"
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        isInvalid={hasPasswordError || hasAuthError}
-                                    />
-                                    <Form.Label htmlFor="password">{t('page.registration.fields.password')}</Form.Label>
-                                    {hasPasswordError && <Form.Control.Feedback type="invalid" tooltip>
-                                        {formik.errors.password}
-                                    </Form.Control.Feedback>}
-                                </Form.Group>
-                                <Form.Group className="mb-4 form-floating">
-                                    <Form.Control
-                                        id="confirmPassword"
-                                        name="confirmPassword"
-                                        autoComplete="new-password"
-                                        required
-                                        placeholder={t('page.registration.fields.placeholderConfirm')}
-                                        type="password"
-                                        value={formik.values.confirmPassword}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        isInvalid={hasConfirmPasswordError || hasAuthError}
-                                    />
-                                    <Form.Label htmlFor="confirmPassword">{t('page.registration.fields.confirmPassword')}</Form.Label>
-                                    <Form.Control.Feedback type="invalid" tooltip>
-                                        {formik.errors.confirmPassword || formik.errors.auth}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                                <Button className="w-100" type="submit" variant="outline-primary">
-                                    {t('page.registration.submit')}
-                                </Button>
-                            </Form>
+              <Form className="w-50" onSubmit={formik.handleSubmit}>
+                <h1 className="text-center mb-4">{t('page.registration.title')}</h1>
+                <Form.Group className="mb-3 form-floating">
+                  <Form.Control
+                    id="username"
+                    name="username"
+                    autoComplete="username"
+                    required
+                    placeholder={t('page.registration.fields.name')}
+                    type="text"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={hasNameError || hasAuthError}
+                    ref={usernameRef}
+                  />
+                  <Form.Label htmlFor="username">{t('page.registration.fields.name')}</Form.Label>
+                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.username}
+                  </Form.Control.Feedback>}
+                </Form.Group>
+                <Form.Group className="mb-3 form-floating">
+                  <Form.Control
+                    id="password"
+                    name="password"
+                    autoComplete="new-password"
+                    required
+                    placeholder={t('page.registration.fields.password')}
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={hasPasswordError || hasAuthError}
+                  />
+                  <Form.Label htmlFor="password">{t('page.registration.fields.password')}</Form.Label>
+                  {hasPasswordError && <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.password}
+                  </Form.Control.Feedback>}
+                </Form.Group>
+                <Form.Group className="mb-4 form-floating">
+                  <Form.Control
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    required
+                    placeholder={t('page.registration.fields.placeholderConfirm')}
+                    type="password"
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={hasConfirmPasswordError || hasAuthError}
+                  />
+                  <Form.Label htmlFor="confirmPassword">{t('page.registration.fields.confirmPassword')}</Form.Label>
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.confirmPassword || formik.errors.auth}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Button className="w-100" type="submit" variant="outline-primary">
+                  {t('page.registration.submit')}
+                </Button>
+              </Form>
 
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-        </Container>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

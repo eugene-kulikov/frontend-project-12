@@ -22,11 +22,11 @@ i18n
 leoProfanity.add(leoProfanity.getDictionary('ru'));
 
 ReactDOM.createRoot(document.body).render(
-    <React.StrictMode>
-      <BrowserRouter>
-          <Provider store={store}>
-              <App />
-          </Provider>
-      </BrowserRouter>
-    </React.StrictMode>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>,
 );

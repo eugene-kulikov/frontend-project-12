@@ -18,44 +18,50 @@ function ChannelItem({ channel }) {
   }];
 
   const buildDefaultButton = () => (
-        <Button type="button"
-                className={cn(buttonClasses)}
-                onClick={() => dispatch(channelsActions.setCurrentChannelId(channel.id))}
-                variant={variant}>
-            <span className="me-1">#</span>{channel.name}
-        </Button>
+    <Button
+      type="button"
+      className={cn(buttonClasses)}
+      onClick={() => dispatch(channelsActions.setCurrentChannelId(channel.id))}
+      variant={variant}
+    >
+      <span className="me-1">#</span>{channel.name}
+    </Button>
   );
 
   const buildEditableButton = () => (
-      <Dropdown as={ButtonGroup} className="d-flex">
-          {buildDefaultButton()}
+    <Dropdown as={ButtonGroup} className="d-flex">
+      {buildDefaultButton()}
 
-          <Dropdown.Toggle
-              className="flex-grow-0"
-              id="dropdown-split-basic"
-              variant={variant}
-              split
-          >
-              <span className="visually-hidden">
-                {t('page.home.channels.dropdown.management')}
-              </span>
-          </Dropdown.Toggle>
+      <Dropdown.Toggle
+        className="flex-grow-0"
+        id="dropdown-split-basic"
+        variant={variant}
+        split
+      >
+        <span className="visually-hidden">
+          {t('page.home.channels.dropdown.management')}
+        </span>
+      </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-              <Dropdown.Item onClick={() => dispatch(modalsActions.showModal({ type: 'removeChannel', channelId: channel.id }))}>
-                  {t('page.home.channels.dropdown.remove')}
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => dispatch(modalsActions.showModal({ type: 'renameChannel', channelId: channel.id }))}>
-                  {t('page.home.channels.dropdown.rename')}
-              </Dropdown.Item>
-          </Dropdown.Menu>
-      </Dropdown>
+      <Dropdown.Menu>
+        <Dropdown.Item
+          onClick={() => dispatch(modalsActions.showModal({ type: 'removeChannel', channelId: channel.id }))}
+        >
+          {t('page.home.channels.dropdown.remove')}
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => dispatch(modalsActions.showModal({ type: 'renameChannel', channelId: channel.id }))}
+        >
+          {t('page.home.channels.dropdown.rename')}
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 
   return (
-      <Nav.Item as="li" className="w-100">
-          {channel.removable ? buildEditableButton() : buildDefaultButton()}
-      </Nav.Item>
+    <Nav.Item as="li" className="w-100">
+      {channel.removable ? buildEditableButton() : buildDefaultButton()}
+    </Nav.Item>
   );
 }
 

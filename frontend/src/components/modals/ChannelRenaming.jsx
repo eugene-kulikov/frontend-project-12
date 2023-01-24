@@ -56,37 +56,37 @@ function ChannelRenaming() {
   const isInvalid = formik.touched.name && formik.errors.name;
 
   return (
-      <Modal show onHide={close}>
-        <Modal.Header closeButton>
-          <Modal.Title>{t('component.modal.rename.title')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group>
-              <Form.Control
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                  className="mb-2"
-                  isInvalid={isInvalid}
-                  id="name"
-                  name="name"
-                  ref={inputRef}
+    <Modal show onHide={close}>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('component.modal.rename.title')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              className="mb-2"
+              isInvalid={isInvalid}
+              id="name"
+              name="name"
+              ref={inputRef}
               />
-              <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.rename.label')}</Form.Label>
-              {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
+            <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.rename.label')}</Form.Label>
+            {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
 
-              <div className="d-flex justify-content-end">
-                <Button onClick={close} className="me-2" variant="secondary">
-                  {t('component.modal.rename.cancel')}
-                </Button>
-                <Button type="submit" disabled={stateSubmit}>
-                  {t('component.modal.rename.confirm')}
-                </Button>
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-      </Modal>
+            <div className="d-flex justify-content-end">
+              <Button onClick={close} className="me-2" variant="secondary">
+                {t('component.modal.rename.cancel')}
+              </Button>
+              <Button type="submit" disabled={stateSubmit}>
+                {t('component.modal.rename.confirm')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 }
 

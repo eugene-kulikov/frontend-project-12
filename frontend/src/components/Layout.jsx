@@ -19,25 +19,25 @@ const Layout = () => {
   };
 
   return (
-        <div className="h-100">
-            <div className="h-100">
-                <div className="d-flex flex-column h-100">
-                    <Navbar bg="white" expand="lg" variant="light" className="shadow-sm">
-                        <Container>
-                            <Navbar.Brand as={Link} to="/">{t('component.layout.brand')}</Navbar.Brand>
-                            {showSignOut && <Nav>
-                                <Nav.Item className='ms-4'>
-                                    <Button variant="primary" onClick={logout}>{t('component.layout.logout')}</Button>
-                                </Nav.Item>
-                            </Nav>}
-                        </Container>
-                    </Navbar>
-                    <>
-                        <Outlet />
-                    </>
-                </div>
-            </div>
+    <div className="h-100">
+      <div className="h-100">
+        <div className="d-flex flex-column h-100">
+          <Navbar bg="white" expand="lg" variant="light" className="shadow-sm">
+            <Container>
+              <Navbar.Brand as={Link} to="/">{t('component.layout.brand')}</Navbar.Brand>
+              {showSignOut && <Nav>
+                <Nav.Item className='ms-4'>
+                  <Button variant="primary" onClick={logout}>{t('component.layout.logout')}</Button>
+                </Nav.Item>
+              </Nav>}
+            </Container>
+          </Navbar>
+          <>
+            <Outlet />
+          </>
         </div>
+      </div>
+    </div>
   );
 };
 

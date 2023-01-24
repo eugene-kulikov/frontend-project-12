@@ -54,68 +54,68 @@ function Login() {
   const hasAuthError = !!formik.errors.auth;
 
   return (
-      <Container fluid className="h-100">
-          <Row className="justify-content-center align-content-center h-100">
-              <Col xs={12} md={8} xxl={6}>
-                  <Card className="shadow-sm">
-                      <Card.Body as={Row} className="p-5">
-                          <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                              <Image roundedCircle={true} src={loginImage} alt={t('page.login.title')}/>
-                          </Col>
-
-                          <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                              <h1 className="text-center mb-4">{t('page.login.submit')}</h1>
-                              <Form.Group className="mb-3 form-floating">
-                                  <Form.Control
-                                      id="username"
-                                      name="username"
-                                      autoComplete="username"
-                                      required
-                                      placeholder={t('page.login.fields.name')}
-                                      type="text"
-                                      value={formik.values.username}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      isInvalid={hasNameError || hasAuthError}
-                                      ref={usernameRef}
-                                  />
-                                  <Form.Label htmlFor="username">{t('page.login.fields.name')}</Form.Label>
-                                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
-                                      {formik.errors.username}
-                                  </Form.Control.Feedback>}
-                              </Form.Group>
-                              <Form.Group className="mb-4 form-floating">
-                                  <Form.Control
-                                      id="password"
-                                      name="password"
-                                      autoComplete="current-password"
-                                      required
-                                      placeholder={t('page.login.fields.password')}
-                                      type="password"
-                                      value={formik.values.password}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      isInvalid={hasPasswordError || hasAuthError}
-                                  />
-                                  <Form.Label htmlFor="password">{t('page.login.fields.password')}</Form.Label>
-                                  <Form.Control.Feedback type="invalid" tooltip>
-                                      {formik.errors.password || formik.errors.auth}
-                                  </Form.Control.Feedback>
-                              </Form.Group>
-                              <Button className="w-100 mb-3" type="submit" variant="outline-primary">
-                                  {t('page.login.title')}
-                              </Button>
-                          </Form>
-
-                      </Card.Body>
-                      <Card.Footer className="p-4 text-center">
-                          <span>{t('page.login.footer.text')}&ensp;</span>
-                          <Link to="/signup">{t('page.login.footer.link')}</Link>
-                      </Card.Footer>
-                  </Card>
+    <Container fluid className="h-100">
+      <Row className="justify-content-center align-content-center h-100">
+        <Col xs={12} md={8} xxl={6}>
+          <Card className="shadow-sm">
+            <Card.Body as={Row} className="p-5">
+              <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
+                <Image roundedCircle={true} src={loginImage} alt={t('page.login.title')}/>
               </Col>
-          </Row>
-      </Container>
+
+              <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
+                <h1 className="text-center mb-4">{t('page.login.submit')}</h1>
+                <Form.Group className="mb-3 form-floating">
+                  <Form.Control
+                    id="username"
+                    name="username"
+                    autoComplete="username"
+                    required
+                    placeholder={t('page.login.fields.name')}
+                    type="text"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={hasNameError || hasAuthError}
+                    ref={usernameRef}
+                  />
+                  <Form.Label htmlFor="username">{t('page.login.fields.name')}</Form.Label>
+                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.username}
+                  </Form.Control.Feedback>}
+                </Form.Group>
+                <Form.Group className="mb-4 form-floating">
+                  <Form.Control
+                    id="password"
+                    name="password"
+                    autoComplete="current-password"
+                    required
+                    placeholder={t('page.login.fields.password')}
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={hasPasswordError || hasAuthError}
+                  />
+                  <Form.Label htmlFor="password">{t('page.login.fields.password')}</Form.Label>
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {formik.errors.password || formik.errors.auth}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Button className="w-100 mb-3" type="submit" variant="outline-primary">
+                  {t('page.login.title')}
+                </Button>
+              </Form>
+
+            </Card.Body>
+            <Card.Footer className="p-4 text-center">
+              <span>{t('page.login.footer.text')}&ensp;</span>
+              <Link to="/signup">{t('page.login.footer.link')}</Link>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
