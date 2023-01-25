@@ -10,7 +10,7 @@ import { selectorChannels } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import socket from '../../utils/socket.js';
 
-function ChannelCreating() {
+const ChannelCreating = () => {
   const dispatch = useDispatch();
   const channels = useSelector(selectorChannels.selectAll);
   const channelsNames = channels.map((channel) => channel.name);
@@ -52,38 +52,38 @@ function ChannelCreating() {
   const isInvalid = formik.touched.name && formik.errors.name;
 
   return (
-        <Modal show onHide={close}>
-            <Modal.Header closeButton>
-                <Modal.Title>{t('component.modal.add.title')}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form onSubmit={formik.handleSubmit}>
-                    <Form.Group>
-                        <Form.Control
-                            onChange={formik.handleChange}
-                            value={formik.values.name}
-                            className="mb-2"
-                            isInvalid={isInvalid}
-                            id="name"
-                            name="name"
-                            ref={inputRef}
-                        />
-                        <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.add.label')}</Form.Label>
-                        {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
+    <Modal show onHide={close}>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('component.modal.add.title')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              className="mb-2"
+              isInvalid={isInvalid}
+              id="name"
+              name="name"
+              ref={inputRef}
+            />
+            <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.add.label')}</Form.Label>
+            {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
 
-                        <div className="d-flex justify-content-end">
-                            <Button onClick={close} className="me-2" variant="secondary">
-                                {t('component.modal.add.cancel')}
-                            </Button>
-                            <Button type="submit" disabled={stateSubmit}>
-                                {t('component.modal.add.confirm')}
-                            </Button>
-                        </div>
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-        </Modal>
+            <div className="d-flex justify-content-end">
+              <Button onClick={close} className="me-2" variant="secondary">
+                {t('component.modal.add.cancel')}
+              </Button>
+              <Button type="submit" disabled={stateSubmit}>
+                {t('component.modal.add.confirm')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
-}
+};
 
 export default ChannelCreating;

@@ -16,7 +16,7 @@ import { actions as messagesActions } from './slices/messagesSlice.js';
 import { actions as channelsActions } from './slices/channelsSlice.js';
 import rollbarConfig from './rollbarConfig.js';
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -37,7 +37,7 @@ function App() {
       dispatch(channelsActions.updateChannel({ id: response.id, changes: response }));
       toast.success(t('toast.success.renameChannel'));
     });
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   return (
     <Provider config={rollbarConfig}>
@@ -45,11 +45,16 @@ function App() {
         <AuthProvider>
           <ToastContainer />
           <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={
-                <RequireAuth>
-                  <Home />
-                </RequireAuth>
+            <Route
+              path="/"
+              element={<Layout />}
+            >
+              <Route
+                index
+                element={
+                  (<RequireAuth>
+                    <Home />
+                  </RequireAuth>)
                 }
               />
               <Route path="login" element={<Login />} />
@@ -61,6 +66,6 @@ function App() {
       </ErrorBoundary>
     </Provider>
   );
-}
+};
 
 export default App;

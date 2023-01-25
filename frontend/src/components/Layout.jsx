@@ -25,11 +25,14 @@ const Layout = () => {
           <Navbar bg="white" expand="lg" variant="light" className="shadow-sm">
             <Container>
               <Navbar.Brand as={Link} to="/">{t('component.layout.brand')}</Navbar.Brand>
-              {showSignOut && <Nav>
-                <Nav.Item className='ms-4'>
-                  <Button variant="primary" onClick={logout}>{t('component.layout.logout')}</Button>
-                </Nav.Item>
-              </Nav>}
+              {showSignOut
+                && (
+                  <Nav>
+                    <Nav.Item className="ms-4">
+                      <Button variant="primary" onClick={logout}>{t('component.layout.logout')}</Button>
+                    </Nav.Item>
+                  </Nav>
+                )}
             </Container>
           </Navbar>
           <>

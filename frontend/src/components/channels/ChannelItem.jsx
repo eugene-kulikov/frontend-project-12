@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { actions as channelsActions } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
-function ChannelItem({ channel }) {
+const ChannelItem = ({ channel }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const currentChannelId = useSelector((store) => store.channels.currentChannelId);
@@ -24,7 +24,8 @@ function ChannelItem({ channel }) {
       onClick={() => dispatch(channelsActions.setCurrentChannelId(channel.id))}
       variant={variant}
     >
-      <span className="me-1">#</span>{channel.name}
+      <span className="me-1">#</span>
+      {channel.name}
     </Button>
   );
 
@@ -63,6 +64,6 @@ function ChannelItem({ channel }) {
       {channel.removable ? buildEditableButton() : buildDefaultButton()}
     </Nav.Item>
   );
-}
+};
 
 export default ChannelItem;

@@ -10,7 +10,7 @@ import socket from '../../utils/socket.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 
-function ChannelRenaming() {
+const ChannelRenaming = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const channels = useSelector(selectorChannels.selectAll);
@@ -71,7 +71,7 @@ function ChannelRenaming() {
               id="name"
               name="name"
               ref={inputRef}
-              />
+            />
             <Form.Label className="visually-hidden" htmlFor="name">{t('component.modal.rename.label')}</Form.Label>
             {isInvalid && <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>}
 
@@ -88,6 +88,6 @@ function ChannelRenaming() {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default ChannelRenaming;

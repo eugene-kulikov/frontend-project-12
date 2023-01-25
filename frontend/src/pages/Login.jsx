@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import loginImage from '../assets/images/login.jpeg';
 import useAuth from '../hook/useAuth.js';
 
-function Login() {
+const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { signin, login } = useAuth();
@@ -60,7 +60,7 @@ function Login() {
           <Card className="shadow-sm">
             <Card.Body as={Row} className="p-5">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <Image roundedCircle={true} src={loginImage} alt={t('page.login.title')}/>
+                <Image roundedCircle={true} src={loginImage} alt={t('page.login.title')} />
               </Col>
 
               <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
@@ -80,9 +80,11 @@ function Login() {
                     ref={usernameRef}
                   />
                   <Form.Label htmlFor="username">{t('page.login.fields.name')}</Form.Label>
-                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
-                    {formik.errors.username}
-                  </Form.Control.Feedback>}
+                  {hasNameError && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.username}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-4 form-floating">
                   <Form.Control
@@ -109,7 +111,10 @@ function Login() {
 
             </Card.Body>
             <Card.Footer className="p-4 text-center">
-              <span>{t('page.login.footer.text')}&ensp;</span>
+              <span>
+                {t('page.login.footer.text')}
+                &ensp;
+              </span>
               <Link to="/signup">{t('page.login.footer.link')}</Link>
             </Card.Footer>
           </Card>
@@ -117,6 +122,6 @@ function Login() {
       </Row>
     </Container>
   );
-}
+};
 
 export default Login;

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import registration from '../assets/images/registration.jpeg';
 import useAuth from '../hook/useAuth.js';
 
-function Registration() {
+const Registration = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { signin, signup } = useAuth();
@@ -69,7 +69,7 @@ function Registration() {
           <Card className="shadow-sm">
             <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <Image roundedCircle={true} src={registration} alt={t('page.registration.title')}/>
+                <Image roundedCircle src={registration} alt={t('page.registration.title')} />
               </div>
 
               <Form className="w-50" onSubmit={formik.handleSubmit}>
@@ -89,9 +89,11 @@ function Registration() {
                     ref={usernameRef}
                   />
                   <Form.Label htmlFor="username">{t('page.registration.fields.name')}</Form.Label>
-                  {hasNameError && <Form.Control.Feedback type="invalid" tooltip>
-                    {formik.errors.username}
-                  </Form.Control.Feedback>}
+                  {hasNameError && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.username}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-3 form-floating">
                   <Form.Control
@@ -107,9 +109,11 @@ function Registration() {
                     isInvalid={hasPasswordError || hasAuthError}
                   />
                   <Form.Label htmlFor="password">{t('page.registration.fields.password')}</Form.Label>
-                  {hasPasswordError && <Form.Control.Feedback type="invalid" tooltip>
-                    {formik.errors.password}
-                  </Form.Control.Feedback>}
+                  {hasPasswordError && (
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {formik.errors.password}
+                    </Form.Control.Feedback>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-4 form-floating">
                   <Form.Control
@@ -140,6 +144,6 @@ function Registration() {
       </Row>
     </Container>
   );
-}
+};
 
 export default Registration;
