@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -9,6 +8,7 @@ import leoProfanity from 'leo-profanity';
 import socket from '../../utils/socket.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
+import getSchema from '../../schemas/channel.js';
 
 const ChannelRenaming = () => {
   const dispatch = useDispatch();
@@ -30,13 +30,7 @@ const ChannelRenaming = () => {
     initialValues: {
       name: selectedChannel.name ?? '',
     },
-    validationSchema: yup.object({
-      name: yup.string()
-        .required(t('validation.required'))
-        .min(3, t('validation.intervalLength'))
-        .max(20, t('validation.intervalLength'))
-        .notOneOf(channelsNames, t('validation.unique')),
-    }),
+    validationSchema: getSchema(t, channelsNames),
     onSubmit: (form) => {
       const name = leoProfanity.clean(form.name);
       inputRef.current.disabled = true;

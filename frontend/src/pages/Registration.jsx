@@ -3,11 +3,11 @@ import {
   Card, Form, Button, Container, Row, Col, Image,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import registration from '../assets/images/registration.jpeg';
 import useAuth from '../hook/useAuth.js';
+import getSchema from '../schemas/registration.js';
 
 const Registration = () => {
   const location = useLocation();
@@ -28,18 +28,7 @@ const Registration = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: yup.object({
-      username: yup.string()
-        .min(3, t('validation.intervalLength'))
-        .max(20, t('validation.intervalLength'))
-        .required(t('validation.required')),
-      password: yup.string()
-        .min(6, t('validation.minLength'))
-        .required(t('validation.required')),
-      confirmPassword: yup.string()
-        .oneOf([yup.ref('password'), null], t('validation.passwordMatch'))
-        .required(t('validation.required')),
-    }),
+    validationSchema: getSchema(t),
     onSubmit: async (values, { setErrors }) => {
       try {
         console.log('registration form', values);

@@ -51,13 +51,11 @@ const App = () => {
             >
               <Route
                 index
-                element={
-                  (
-                    <RequireAuth>
-                      <Home />
-                    </RequireAuth>
-                  )
-                }
+                element={(
+                  <RequireAuth>
+                    <Home />
+                  </RequireAuth>
+                )}
               />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Registration />} />

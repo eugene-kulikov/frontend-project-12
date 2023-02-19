@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import {
   Card, Form, Button, Container, Row, Col, Image,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import loginImage from '../assets/images/login.jpeg';
 import useAuth from '../hook/useAuth.js';
+import getSchema from '../schemas/login.js';
 
 const Login = () => {
   const location = useLocation();
@@ -27,12 +27,7 @@ const Login = () => {
       username: '',
       password: '',
     },
-    validationSchema: yup.object({
-      username: yup.string()
-        .required(t('validation.required')),
-      password: yup.string()
-        .required(t('validation.required')),
-    }),
+    validationSchema: getSchema(t),
     onSubmit: async (values, { setErrors }) => {
       console.log('login form', values);
       try {
