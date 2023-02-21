@@ -1,5 +1,5 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from '../hook/useAuth.js';
+import useAuth from '../hooks/useAuth.js';
 import { isEmptyObject } from '../utils/common.js';
 
 const RequireAuth = ({ children }) => {

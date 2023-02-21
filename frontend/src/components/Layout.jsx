@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hook/useAuth.js';
+import useAuth from '../hooks/useAuth.js';
 import { isEmptyObject } from '../utils/common.js';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
 

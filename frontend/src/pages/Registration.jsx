@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import registration from '../assets/images/registration.jpeg';
-import useAuth from '../hook/useAuth.js';
+import useAuth from '../hooks/useAuth.js';
 import getSchema from '../schemas/registration.js';
 
 const Registration = () => {

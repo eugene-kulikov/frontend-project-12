@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import ChatContent from './ChatContent.jsx';
 import socket from '../../utils/socket.js';
-import useAuth from '../../hook/useAuth.js';
+import useAuth from '../../hooks/useAuth.js';
 import { selectorMessages } from '../../slices/messagesSlice.js';
 import { selectorChannels } from '../../slices/channelsSlice.js';
 import { ReactComponent as SendIcon } from '../../assets/icons/send.svg';

@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import loginImage from '../assets/images/login.jpeg';
-import useAuth from '../hook/useAuth.js';
+import useAuth from '../hooks/useAuth.js';
 import getSchema from '../schemas/login.js';
 
 const Login = () => {
