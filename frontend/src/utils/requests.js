@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { getUserInfo } from './common.js';
 
 export default {
@@ -19,3 +20,23 @@ export default {
       .then((response) => response.data || {});
   },
 };
+
+// eslint-disable-next-line consistent-return
+export function getErrorMessage(error, t) {
+  const { request, response } = error;
+  if (response) {
+    const { status } = response;
+    switch (status) {
+      case 401:
+        return t('validation.invalidData');
+      case 409:
+        return t('validation.userExist');
+      default:
+        return `${t('validation.unknownError')}: ${response.statusText}`;
+    }
+  } else if (request) {
+    toast.error(t('toast.error.network'));
+  } else {
+    toast.error(t('toast.error.wrongSettingUp'));
+  }
+}

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import registration from '../assets/images/registration.jpeg';
 import useAuth from '../hooks/useAuth.js';
 import getSchema from '../schemas/registration.js';
+import { getErrorMessage } from '../utils/requests.js';
 
 const Registration = () => {
   const location = useLocation();
@@ -38,9 +39,7 @@ const Registration = () => {
         });
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
-        console.log('onSubmit registration form', e);
-        const message = e.response.status === 409 ? t('validation.userExist') : e.response?.data?.message;
-        setErrors({ auth: message });
+        setErrors({ auth: getErrorMessage(e, t) });
       }
     },
   });

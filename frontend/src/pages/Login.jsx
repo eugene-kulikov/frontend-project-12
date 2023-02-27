@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import loginImage from '../assets/images/login.jpeg';
 import useAuth from '../hooks/useAuth.js';
 import getSchema from '../schemas/login.js';
+import { getErrorMessage } from '../utils/requests.js';
 
 const Login = () => {
   const location = useLocation();
@@ -37,9 +38,7 @@ const Login = () => {
         });
         signin(values, () => navigate(fromPage, { replace: true }));
       } catch (e) {
-        console.log('onSubmit login form', e);
-        const message = e.code === 'ERR_BAD_REQUEST' ? t('validation.invalidData') : e.response?.data?.message;
-        setErrors({ auth: message });
+        setErrors({ auth: getErrorMessage(e, t) });
       }
     },
   });

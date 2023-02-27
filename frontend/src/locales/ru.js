@@ -79,6 +79,7 @@ export default {
       passwordMatch: 'Пароли должны совпадать',
       userExist: 'Такой пользователь уже существует',
       unique: 'Должно быть уникальным',
+      unknownError: 'Неизвестная ошибка',
     },
     toast: {
       success: {
@@ -88,6 +89,7 @@ export default {
       },
       error: {
         network: 'Ошибка соединения',
+        wrongSettingUp: 'Произошло что-то при настройке запроса, вызвавшее ошибку',
       },
     },
   },
