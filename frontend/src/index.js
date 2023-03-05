@@ -8,17 +8,10 @@ import { initReactI18next } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import App from './App.jsx';
 import store from './slices/index.js';
-import resources from './locales/index.js';
+import setLocales from './locales/index.js';
 import 'react-toastify/dist/ReactToastify.css';
 
-i18n
-  .use(initReactI18next)
-  .init({
-    lng: 'ru',
-    debug: false,
-    resources,
-  });
-
+i18n.use(initReactI18next).init(setLocales());
 leoProfanity.add(leoProfanity.getDictionary('ru'));
 
 ReactDOM.createRoot(document.body).render(
